@@ -1,0 +1,172 @@
+# ------------------------------
+# RL78/G23 and platform.
+# ------------------------------
+# For more info:
+# LLVM Prototype Package for Tools Test
+name=Renesas RL78/G15
+version=1.0.0
+
+# --------------------- 
+# AVR compile variables
+# --------------------- 
+compiler.optimize =-Os
+
+#------------------------------------#
+# LLVM Compiler Common Variable
+#------------------------------------#
+compiler.path={runtime.tools.llvm-rl78.path}/bin/
+
+
+#library path 
+compiler_lib_path1={compiler.path}../rl78/lib/s2/disable-mda/Oz/libc.a
+compiler_lib_path2={compiler.path}../lib/clang/LLVM for Renesas RL78 10.0.0.202209/rl78/s2/disable-mda/Oz/lib/baremetal/libclang_rt.builtins-rl78.a
+
+#------------------------------------#
+# LLVM Compiler variable
+#------------------------------------#
+compiler.c.cmd=clang
+compiler.c.flags=--target=rl78 {compiler.optimize} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -v -std=gnu99 -DARDUINO=1813 -D__RL78__ -DG23_FPB
+
+#------------------------------------#
+# LLVM C++ Compiler variable
+#------------------------------------#
+compiler.cpp.cmd=clang++
+compiler.cpp.flags=--target=rl78 {compiler.optimize} -g -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -mcpu=s2 -mdisable-mda -DCPPAPP -DARDUINO=1813 -D__RL78__ -DG23_FPB
+
+#------------------------------------#
+# LLVM Asemble variable
+#------------------------------------#
+compiler.S.cmd=clang
+compiler.S.flags=--target=rl78 {compiler.optimize} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -DCPPAPP 
+
+#------------------------------------#
+# LLVM Linker variable
+#------------------------------------#
+compiler.c.elf.cmd=clang++
+compiler.c.elf.flags=--target=rl78 -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda 
+
+#------------------------------------#
+# LLVM Object Copy variable
+#------------------------------------#
+compiler.elf2hex.cmd=llvm-objcopy
+compiler.elf2hex.flags=
+
+#------------------------------------#
+# LLVM print Size variable
+#------------------------------------#
+compiler.size.cmd=llvm-size
+compiler.size.flags=--format=sysv
+
+#------------------------------------#
+# LLVM include paths
+#------------------------------------#
+inc0= "-I{runtime.platform.path}/cores"
+inc1= "-I{runtime.platform.path}/cores/rl78g15"
+inc2= "-I{runtime.platform.path}/cores/rl78g15/avr"
+inc3= "-I{runtime.platform.path}/cores/rl78g15/smc_gen"
+inc4= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_ADC"
+inc5= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_CSI00"
+inc6= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_IICA0"
+inc7= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_INTC"
+inc8= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_IT"
+inc9= "-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_0_Measure_Signal"
+inc10="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_1_SquareWave"
+inc11="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_2"
+inc12="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_2_SquareWave"
+inc13="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_3_SquareWave"
+inc14="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_3_Measure_Signal"
+inc15="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_25PWM"
+inc16="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_TAU0_6_Micros"
+inc17="-I{runtime.platform.path}/cores/rl78g15/smc_gen/Config_UART0"
+inc18="-I{runtime.platform.path}/cores/rl78g15/smc_gen/general"
+inc19="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/board"
+inc20="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/board/generic_rl78_g15"
+inc21="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_config"
+inc22="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp"
+inc23="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/mcu"
+inc24="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/mcu/all"
+inc25="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/mcu/rl78_g15"
+inc26="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/mcu/rl78_g15/register_access"
+inc27="-I{runtime.platform.path}/cores/rl78g15/smc_gen/r_bsp/mcu/rl78_g15/register_access/llvm"
+inc28="-I{runtime.platform.path}/libraries"
+inc29="-I{runtime.platform.path}/variants"
+inc30="-I{runtime.platform.path}/variants/g15-fpb-20p"
+inc31="-I{runtime.platform.path}/variants/linker_scripts"
+
+incA={inc0} {inc1} {inc2} {inc3} {inc4} {inc5} {inc6} {inc7} {inc8} {inc9} 
+incB={inc10} {inc11} {inc12} {inc13} {inc14} {inc15} {inc16} {inc17} {inc18} {inc19} 
+incC={inc20} {inc21} {inc22} {inc23} {inc24} {inc25} {inc26} {inc27} {inc28} {inc29} 
+incD={inc30} {inc31} 
+incE=
+incF=
+incG=
+incH=
+
+compiler.includes={incA} {incB} {incC} {incD}
+
+
+# this can be overriden in boards.txt
+build.extra_flags=
+
+
+# --------------------
+# LLVM compile patterns
+# --------------------
+
+# --------------------
+# Compile c files
+# --------------------
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}"  {compiler.c.flags} {build.extra_flags} {includes} {compiler.includes} -c "{source_file}" -o "{object_file}"
+
+# --------------------
+# Compile c++ files
+# --------------------
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}"  {compiler.cpp.flags} {build.extra_flags} {includes} {compiler.includes}  -o "{object_file}" -MMD  -MP -MF "{object_file}" -c  "{source_file}"
+
+# --------------------
+# Compile S files
+# --------------------
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {includes} {compiler.includes} {compiler.S.flags} -c -x assembler-with-cpp "{source_file}" -o "{object_file}"
+
+# --------------------
+# Create archives
+# --------------------
+compiler.ar.cmd=llvm-ar.exe
+compiler.ar.flags=rcs
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
+
+# --------------------
+# Combine gc-sections, archives, and objects
+# --------------------
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {object_files} "{build.path}/core/smc_gen/general/r_cg_vect_table.c.o" "-L{build.path}" "{build.path}/{archive_file}" "{compiler_lib_path1}" "{compiler_lib_path2}" "-T{runtime.platform.path}/{build.ldscript}"  -Wl,-Map={build.path}/{build.project_name}.map -Wl,--start-group -Wl,--end-group -nostartfiles -Wl,-e_PowerON_Reset -Wl,--gc-sections -Wl,--icf=none -o {build.path}/{build.project_name}.elf
+
+# --------------------
+# Create eeprom
+# --------------------
+recipe.objcopy.eep.pattern=
+
+# --------------------
+# Create hex
+# --------------------
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" -O srec "{build.path}/{build.project_name}.mot"
+
+# --------------------
+# Compute size
+# --------------------
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" {compiler.size.flags} "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.vec |\.vects |\.callt0 |\.option_byte |\.security_id |\.lowtext |\.init |\.fini |\.rodata |\.text |\.textf |\.frodata |\.eh_frame_hdr |\.eh_frame |\.data |\.dataf |\.sdata |\.saddr )\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data |\.dataf |\.sdata |\.saddr |\.sbss |\.bss |\.bssf |\.stack )\s+([0-9]+).*
+
+# --------------------
+# SAM3 Uploader tools
+# -------------------
+
+tools.rl78flash.cmd=rl78flash_g1x
+tools.rl78flash.cmd.windows=rl78flash_g1x.exe
+tools.rl78flash.path={runtime.tools.rl78.path}
+
+tools.rl78flash.upload.params.verbose=
+tools.rl78flash.upload.params.quiet=
+tools.rl78flash.upload.pattern="{path}/{cmd}" {serial.port.file} "{build.path}/{build.project_name}.mot"
+
+#<EOF>

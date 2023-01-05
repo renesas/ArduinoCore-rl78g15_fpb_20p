@@ -1,0 +1,32 @@
+# See: http://code.google.com/p/arduino/wiki/Platforms
+
+menu.cpu=Processor
+
+## RL78/G15 Fast Prototyping Board Description
+g15-fpb-20p.name=RL78-G15 Fast Prototyping Board
+g15-fpb-20p.upload.tool=rl78flash
+g15-fpb-20p.upload.protocol=rl78
+g15-fpb-20p.upload.maximum_size=8192
+g15-fpb-20p.upload.maximum_data_size=1024
+g15-fpb-20p.upload.speed=115200
+
+g15-fpb-20p.bootloader.tool=
+g15-fpb-20p.bootloader.low_fuses=
+g15-fpb-20p.bootloader.high_fuses=
+g15-fpb-20p.bootloader.extended_fuses=
+g15-fpb-20p.bootloader.unlock_bits=
+g15-fpb-20p.bootloader.lock_bits=
+g15-fpb-20p.bootloader.file=
+
+g15-fpb-20p.build.mcu=rl78
+g15-fpb-20p.build.f_cpu=16000000L
+g15-fpb-20p.build.board=RL78-G15 Fast Prototyping Board
+g15-fpb-20p.build.core=rl78g15
+########## TSSR changed ##########
+g15-fpb-20p.build.ldscript=variants/linker_scripts/rl78_R5F12068xSP.ld
+########## TSSR changed ##########
+g15-fpb-20p.build.variant=g15-fpb-20p
+g15-fpb-20p.build.extra_flags=-DGRPROT
+
+##############################################################
+#<EOF>
