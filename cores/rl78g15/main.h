@@ -1,6 +1,6 @@
 // main.h
 
-#define USE_I2C   0
+#define USE_I2C   1
 #define USE_UART0 1
 #define USE_SPI   0
 //  ADC is used for Analog Read
