@@ -662,10 +662,10 @@ uint16_t makeWord(byte h, byte l);
 
 #define word(...) makeWord(__VA_ARGS__)
 
-//unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
+unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 //unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 //
-//void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
+void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
 //void noTone(uint8_t _pin);
 
 // WMath prototypes
@@ -741,11 +741,11 @@ long map(long, long, long, long, long);
 
 #if (F_CPU == 32000000)
 /* For RL78/G23, RL78/G22, etc. */
-#define MICROS_EXEC_TIME  (4) /* micros() execution time(unit:us) */
-#define DELAYMICROSECONDS_ADJUST1  (2) /* Processing time(unit:us) if delayMicroseconds() function returns immediately */
+#define MICROS_EXEC_TIME  (3) /* micros() execution time(unit:us) */
+#define DELAYMICROSECONDS_ADJUST1  (1) /* Processing time(unit:us) if delayMicroseconds() function returns immediately */
 #define DELAYMICROSECONDS_ADJUST2  (MICROS_EXEC_TIME + DELAYMICROSECONDS_ADJUST1 + 1)
 #define DELAYMICROSECONDS_ADJUST3  (DELAYMICROSECONDS_ADJUST2 + MICROS_EXEC_TIME)
-#define DELAYMICROSECONDS_ADJUST4  (4) /* Adjustment when waiting for time in delay_wait().　(visual check) */
+#define DELAYMICROSECONDS_ADJUST4  (5) /* Adjustment when waiting for time in delay_wait().　(visual check) */
 #else /* (F_CPU == 16000000) */
 #endif /* (F_CPU == 16000000) */
 
@@ -765,8 +765,8 @@ long map(long, long, long, long, long);
 #if (F_CPU == 32000000)
 #elif (F_CPU == 16000000)
 /* For RL78/G15, etc */
-#define MICROS_EXEC_TIME  (13) /* unit : us */
-#define DELAYMICROSECONDS_ADJUST1  (3) /* Processing time(unit:us) if delayMicroseconds() function returns immediately */
+#define MICROS_EXEC_TIME  (5) /* unit : us */
+#define DELAYMICROSECONDS_ADJUST1  (2) /* Processing time(unit:us) if delayMicroseconds() function returns immediately */
 #define DELAYMICROSECONDS_ADJUST2  (MICROS_EXEC_TIME + DELAYMICROSECONDS_ADJUST1 + 1)
 #define DELAYMICROSECONDS_ADJUST3  (DELAYMICROSECONDS_ADJUST2 + MICROS_EXEC_TIME)
 #define DELAYMICROSECONDS_ADJUST4  (2) /* Adjustment when waiting for time in delay_wait().　(visual check) */

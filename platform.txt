@@ -1,15 +1,20 @@
 # ------------------------------
-# RL78/G23 and platform.
+# RL78/G15 and platform.
 # ------------------------------
 # For more info:
 # LLVM Prototype Package for Tools Test
 name=Renesas RL78/G15
-version=1.1.0
+version=1.2.0
 
 # --------------------- 
 # AVR compile variables
 # --------------------- 
 compiler.optimize =-Os
+compiler.warning_flags=-w
+compiler.warning_flags.none=-w
+compiler.warning_flags.default=
+compiler.warning_flags.more=-Wall
+compiler.warning_flags.all=-Wall -Wextra
 
 #------------------------------------#
 # LLVM Compiler Common Variable
@@ -19,19 +24,21 @@ compiler.path={runtime.tools.llvm-rl78.path}/bin/
 
 #library path 
 compiler_lib_path1={compiler.path}../rl78/lib/s2/disable-mda/Oz/libc.a
-compiler_lib_path2={compiler.path}../lib/clang/LLVM for Renesas RL78 10.0.0.202209/rl78/s2/disable-mda/Oz/lib/baremetal/libclang_rt.builtins-rl78.a
+compiler_lib_path2={compiler.path}../lib/clang/LLVM for Renesas RL78 10.0.0.202310/rl78/s2/disable-mda/Oz/lib/baremetal/libclang_rt.builtins-rl78.a
+compiler_lib_path3={compiler.path}../rl78/lib/s2/disable-mda/Oz/libnosys.a
+
 
 #------------------------------------#
 # LLVM Compiler variable
 #------------------------------------#
 compiler.c.cmd=clang
-compiler.c.flags=--target=rl78 {compiler.optimize} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -v -std=gnu99 -DARDUINO=1813 -D__RL78__ -DG23_FPB
+compiler.c.flags=--target=rl78 {compiler.optimize} {compiler.warning_flags} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -std=gnu99 -DARDUINO=1813 -D__RL78__ -DG23_FPB
 
 #------------------------------------#
 # LLVM C++ Compiler variable
 #------------------------------------#
 compiler.cpp.cmd=clang++
-compiler.cpp.flags=--target=rl78 {compiler.optimize} -g -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -mcpu=s2 -mdisable-mda -DCPPAPP -DARDUINO=1813 -D__RL78__ -DG23_FPB
+compiler.cpp.flags=--target=rl78 {compiler.optimize} {compiler.warning_flags} -g -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -mcpu=s2 -mdisable-mda -DCPPAPP -DARDUINO=1813 -D__RL78__ -DG23_FPB
 
 #------------------------------------#
 # LLVM Asemble variable
@@ -138,7 +145,7 @@ recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archi
 # --------------------
 # Combine gc-sections, archives, and objects
 # --------------------
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {object_files} "{build.path}/core/smc_gen/general/r_cg_vect_table.c.o" "-L{build.path}" "{build.path}/{archive_file}" "{compiler_lib_path1}" "{compiler_lib_path2}" "-T{runtime.platform.path}/{build.ldscript}"  -Wl,-Map={build.path}/{build.project_name}.map -Wl,--start-group -Wl,--end-group -nostartfiles -Wl,-e_PowerON_Reset -Wl,--gc-sections -Wl,--icf=none -o {build.path}/{build.project_name}.elf
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {object_files} "-L{build.path}" "{build.path}/{archive_file}" "{compiler_lib_path1}" "{compiler_lib_path2}" "{compiler_lib_path3}" "-T{runtime.platform.path}/{build.ldscript}"  -Wl,-Map={build.path}/{build.project_name}.map -Wl,--start-group -Wl,--end-group -nostartfiles -Wl,-e_PowerON_Reset -Wl,--gc-sections -Wl,--icf=none -o {build.path}/{build.project_name}.elf
 
 # --------------------
 # Create eeprom

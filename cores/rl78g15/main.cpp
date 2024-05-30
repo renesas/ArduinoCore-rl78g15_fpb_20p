@@ -31,9 +31,10 @@ extern "C" {
 }
 #endif
 
-#if defined(USE_I2C)&& (USE_I2C == 1)
-#include <Wire.h>
-#endif  // defined(USE_I2C)
+/* This declaration is used to force the constant in
+ * r_cg_vect_table.c to be linked to the static library (*.a). */
+extern const unsigned char Option_Bytes[];
+void * p_force_link = (void * )Option_Bytes;
 
 // Declared weak in Arduino.h to allow user redefinitions.
 #ifndef __RL78__
@@ -136,14 +137,14 @@ int main(void)
  * @attention No return
  ***************************************************************************/
 #include <stdlib.h>
-
+/*
 void abort(void)
 {
     for(;;);
 }
 
 void exit(int) __attribute__ ((weak, alias ("abort")));
-
+*/
 #include <exception>
 
 #endif

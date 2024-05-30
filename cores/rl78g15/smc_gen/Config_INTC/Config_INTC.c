@@ -77,12 +77,6 @@ void R_Config_INTC_Create(void)
     PPR14 = 1U;
     PPR04 = 1U;
 
-    /* Set INTP3 pin */
-    PMC0 &= 0xEFU;
-    PM0 |= 0x10U;
-    /* Set INTP4 pin */
-    PM4 |= 0x02U;
-
     R_Config_INTC_Create_UserInit();
 }
 
