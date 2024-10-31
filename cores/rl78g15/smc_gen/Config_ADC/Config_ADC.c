@@ -63,9 +63,6 @@ void R_Config_ADC_Create(void)
     /* Set INTAD priority */
     ADPR1 = 1U;
     ADPR0 = 1U;
-    /* Set ANI7 pin */
-    PMC2 |= 0x08U;
-    PM2 |= 0x08U;
     ADM0 = _00_AD_CONVERSION_CLOCK_8 | _00_AD_TIME_MODE_NORMAL_1;
     ADM2 = _00_AD_RESOLUTION_10BIT;
     ADS = _07_AD_INPUT_CHANNEL_7;

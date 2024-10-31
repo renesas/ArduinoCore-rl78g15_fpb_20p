@@ -358,7 +358,7 @@ const PinTableType * const pinTablelist[NUM_DIGITAL_PINS] =
     &pinTable_7,
     &pinTable_8,
     &pinTable_9,
-    /* 10 ~ 17 */
+    /* 10 ~ 19 */
     &pinTable_10,
     &pinTable_1,  /* pin11 = pin1 */
     &pinTable_0,  /* pin12 = pin0 */

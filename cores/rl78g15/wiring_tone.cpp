@@ -1,54 +1,14 @@
-/*
- * writing_tone.c
- *
- *  Created on: 2021/11/02
- *      Author: hmU11983
- */
-
-#include "pins_arduino.h"
-/* 1112 nhu add */
+#include "pins_variant.h"
+#include "iodefine.h"
+#include "iodefine_ext.h"
 #include "wiring_private.h"
-#include "pintable.h"
+#include "wiring_private_tone.h"
 #include "r_smc_entry.h"
-/* 1112 nhu add */
 
-
-volatile long timer1_toggle_count;
-volatile uint8_t *timer1_pin_port;
-volatile uint8_t timer1_pin_mask;
-volatile long timer2_toggle_count;
-volatile uint8_t *timer2_pin_port;
-volatile uint8_t timer2_pin_mask;
-
-/* 1112 nhu add */
-extern uint32_t R_BSP_GetFclkFreqHz(void);
-
+extern "C"{
 /* ★pow関数の代わり★ */
-uint16_t pow2n(uint8_t fact);
-
-/* tone pin set */
-volatile unsigned short *g_tone_period_reg[TONE_CH_NUM] = {&TDR01,&TDR02,&TDR03};
-volatile unsigned short *g_timer_tone_mode_reg[TONE_CH_NUM] = {&TMR01,&TMR02,&TMR03};
-volatile unsigned short *g_timer_tone_clock_select_reg = &TPS0;
-const uint8_t  tone_channel_table[TONE_CH_NUM]  = {PWM_PIN_0,PWM_PIN_13,PWM_PIN_3};
-tone_func tone_ch[TONE_CH_NUM] =
-{
-    {
-        .open  = (void*)R_Config_TAU0_1_Square_Wave_Create,
-        .start = (void*)R_Config_TAU0_1_Square_Wave_Start,
-        .stop = (void*)R_Config_TAU0_1_Square_Wave_Stop
-    },
-    {
-        .open  = (void*)R_Config_TAU0_2_Square_Wave_Create,
-        .start = (void*)R_Config_TAU0_2_Square_Wave_Start,
-        .stop = (void*)R_Config_TAU0_2_Square_Wave_Stop
-    },
-    {
-        .open  = (void*)R_Config_TAU0_3_Square_Wave_Create,
-        .start = (void*)R_Config_TAU0_3_Square_Wave_Start,
-        .stop = (void*)R_Config_TAU0_3_Square_Wave_Stop
-    }
-};
+    uint16_t pow2n(uint8_t fact);
+}
 
 int8_t get_tone_channel(uint8_t tone_num)
 {
@@ -64,7 +24,18 @@ int8_t get_tone_channel(uint8_t tone_num)
     return -1;
 }
 
-/* 1112 nhu add */
+void noTone(uint8_t pin)
+{
+    int8_t tone_channel = get_tone_channel(pin);
+    if (-1 == tone_channel)
+    {
+        ;
+    }
+    else
+    {
+    tone_ch[tone_channel].stop();
+    }
+}
 
 // frequency (in hertz) and duration (in milliseconds).
 
@@ -156,26 +127,4 @@ void tone(uint8_t pin, unsigned int frequency, unsigned long duration)
         }
     }
 }
-
-// XXX: this function only works properly for timer 2 (the only one we use
-// currently).  for the others, it should end the tone, but won't restore
-// proper PWM functionality for the timer.
-void disableTimer(uint8_t _timer)
-{
-
-}
-
-void noTone(uint8_t pin)
-{
-    int8_t tone_channel = get_tone_channel(pin);
-    if (-1 == tone_channel)
-    {
-        ;
-    }
-    else
-    {
-    tone_ch[tone_channel].stop();
-    }
-}
-
 

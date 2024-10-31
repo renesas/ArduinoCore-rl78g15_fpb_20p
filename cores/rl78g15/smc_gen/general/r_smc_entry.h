@@ -60,7 +60,9 @@ Global functions
 #include "Config_TAU0_0_Measure_Signal.h"
 #include "Config_TAU0_3_Measure_Signal.h"
 #include "Config_TAU0_6_Micros.h"
-
+#include "Config_TAU0_2.h"
+#include "Config_TAU0_25PWM.h"
+#include "Config_ADC.h"
 /* End user code. Do not edit comment generated here */
 #endif
 

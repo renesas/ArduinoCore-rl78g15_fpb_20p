@@ -4,12 +4,13 @@
 # For more info:
 # LLVM Prototype Package for Tools Test
 name=Renesas RL78/G15
-version=1.2.0
+version=1.2.1
 
 # --------------------- 
-# AVR compile variables
+# Compile variables
 # --------------------- 
 compiler.optimize =-Os
+
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
 compiler.warning_flags.default=
@@ -23,34 +24,39 @@ compiler.path={runtime.tools.llvm-rl78.path}/bin/
 
 
 #library path 
-compiler_lib_path1={compiler.path}../rl78/lib/s2/disable-mda/Oz/libc.a
-compiler_lib_path2={compiler.path}../lib/clang/LLVM for Renesas RL78 10.0.0.202310/rl78/s2/disable-mda/Oz/lib/baremetal/libclang_rt.builtins-rl78.a
-compiler_lib_path3={compiler.path}../rl78/lib/s2/disable-mda/Oz/libnosys.a
-
+#------------------------------------#
+compiler_lib_path1={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libc.a
+compiler_lib_path2={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libc_nano.a
+compiler_lib_path3={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libc++.a
+compiler_lib_path4={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libc++abi.a
+compiler_lib_path5={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libm.a
+compiler_lib_path6={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libnosys.a
+compiler_lib_path7={compiler.path}../lib/clang-runtimes/rl78-unknown-elf/s2_Oz_nc_d32_nomda/lib/libclang_rt.builtins-rl78.a
+#------------------------------------#
 
 #------------------------------------#
 # LLVM Compiler variable
 #------------------------------------#
 compiler.c.cmd=clang
-compiler.c.flags=--target=rl78 {compiler.optimize} {compiler.warning_flags} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -std=gnu99 -DARDUINO=1813 -D__RL78__ -DG23_FPB
+compiler.c.flags=--target=rl78 {compiler.optimize} -fno-diagnostics-show-line-numbers -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -std=gnu99 -DARDUINO=1813 -D__RL78__ -DG15_FPB -Wnonportable-include-path {compiler.warning_flags}
 
 #------------------------------------#
 # LLVM C++ Compiler variable
 #------------------------------------#
 compiler.cpp.cmd=clang++
-compiler.cpp.flags=--target=rl78 {compiler.optimize} {compiler.warning_flags} -g -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -mcpu=s2 -mdisable-mda -DCPPAPP -DARDUINO=1813 -D__RL78__ -DG23_FPB
+compiler.cpp.flags=--target=rl78 {compiler.optimize} -g -fno-diagnostics-show-line-numbers -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -mcpu=s2 -mdisable-mda -DCPPAPP -DARDUINO=1813 -D__RL78__ -DG15_FPB -Wnonportable-include-path {compiler.warning_flags}
 
 #------------------------------------#
 # LLVM Asemble variable
 #------------------------------------#
 compiler.S.cmd=clang
-compiler.S.flags=--target=rl78 {compiler.optimize} -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -DCPPAPP 
+compiler.S.flags=--target=rl78 {compiler.optimize} -fno-diagnostics-show-line-numbers -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda -DCPPAPP 
 
 #------------------------------------#
 # LLVM Linker variable
 #------------------------------------#
 compiler.c.elf.cmd=clang++
-compiler.c.elf.flags=--target=rl78 -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda 
+compiler.c.elf.flags=--target=rl78 -fno-diagnostics-show-line-numbers -ffunction-sections -fdata-sections -fdiagnostics-parseable-fixits -g -mcpu=s2 -mdisable-mda 
 
 #------------------------------------#
 # LLVM Object Copy variable
@@ -106,15 +112,13 @@ incC={inc20} {inc21} {inc22} {inc23} {inc24} {inc25} {inc26} {inc27} {inc28} {in
 incD={inc30} {inc31} 
 incE=
 incF=
-incG=
-incH=
+
 
 compiler.includes={incA} {incB} {incC} {incD}
 
 
 # this can be overriden in boards.txt
 build.extra_flags=
-
 
 # --------------------
 # LLVM compile patterns
@@ -138,14 +142,14 @@ recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {includes} {compiler.includ
 # --------------------
 # Create archives
 # --------------------
-compiler.ar.cmd=llvm-ar.exe
+compiler.ar.cmd=llvm-ar
 compiler.ar.flags=rcs
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
 
 # --------------------
 # Combine gc-sections, archives, and objects
 # --------------------
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {object_files} "-L{build.path}" "{build.path}/{archive_file}" "{compiler_lib_path1}" "{compiler_lib_path2}" "{compiler_lib_path3}" "-T{runtime.platform.path}/{build.ldscript}"  -Wl,-Map={build.path}/{build.project_name}.map -Wl,--start-group -Wl,--end-group -nostartfiles -Wl,-e_PowerON_Reset -Wl,--gc-sections -Wl,--icf=none -o {build.path}/{build.project_name}.elf
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {object_files} "-L{build.path}" "{build.path}/{archive_file}" "{compiler_lib_path1}" "{compiler_lib_path2}" "{compiler_lib_path3}" "{compiler_lib_path4}" "{compiler_lib_path5}"  "{compiler_lib_path6}" "{compiler_lib_path7}" "-T{runtime.platform.path}/{build.ldscript}"  -Wl,-Map={build.path}/{build.project_name}.map -Wl,--start-group -Wl,--end-group -nostartfiles -Wl,-e_PowerON_Reset -Wl,--gc-sections -Wl,--icf=none -o {build.path}/{build.project_name}.elf
 
 # --------------------
 # Create eeprom
@@ -165,7 +169,7 @@ recipe.size.regex=^(?:\.vec |\.vects |\.callt0 |\.option_byte |\.security_id |\.
 recipe.size.regex.data=^(?:\.data |\.dataf |\.sdata |\.saddr |\.sbss |\.bss |\.bssf |\.stack )\s+([0-9]+).*
 
 # --------------------
-# SAM3 Uploader tools
+# RL78 Uploader tools
 # -------------------
 
 tools.rl78flash.cmd=rl78flash_g1x

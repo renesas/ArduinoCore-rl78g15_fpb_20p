@@ -70,7 +70,7 @@ void R_Systeminit(void)
     WDTIMK = 1U;    /* disable INTWDTI interrupt */
 //    R_Config_IT_Create();
     TMKAEN = 1U;    /* enable input clock supply IT */
-    IICA0EN = 1U;    /* enables input clock supply TAU(PWM) */
+    IICA0EN = 1U;    /* enables input clock supply IICA0 */
     TAU0EN = 1U;    /* start TAU0 clock */
 
 #if defined(USE_ADC) & (USE_ADC==1)

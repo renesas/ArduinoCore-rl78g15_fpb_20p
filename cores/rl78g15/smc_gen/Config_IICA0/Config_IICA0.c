@@ -91,8 +91,6 @@ void R_Config_IICA0_Create(void)
     LREL0 = 1U;
     /* Set SCLA0, SDAA0 pin */
     PM0 &= 0x3FU;
-
-    /* Add Aono 2022/08/09 */
     PMC0 &= 0x3FU;
 
     R_Config_IICA0_Create_UserInit();
@@ -292,8 +290,6 @@ void R_Config_IICA0_Master_SetClock(uint32_t clock) {
     LREL0 = 1U;
     /* Set SCLA0, SDAA0 pin */
     PM0 &= 0x3FU;
-
-    /* Add Aono 2022/08/09 */
     PMC0 &= 0x3FU;
 
 

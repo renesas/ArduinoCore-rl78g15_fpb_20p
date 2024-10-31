@@ -56,8 +56,8 @@ extern uint16_t g_uart0_rx_length;                /* uart0 receive data length *
 /* Start user code for global. Do not edit comment generated here */
 void Set_Char_Serial_to_buf(uint8_t chn);
 void Set_Char_Serial_from_buf(uint8_t chn);
-extern fInterruptFunc_t uart_receive_callback_table[3] __attribute__((weak));
-extern fInterruptFunc_t uart_transmit_callback_table[3] __attribute__((weak));
+extern fInterruptFunc_t uart_receive_callback_table[2] __attribute__((weak));
+extern fInterruptFunc_t uart_transmit_callback_table[2] __attribute__((weak));
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************

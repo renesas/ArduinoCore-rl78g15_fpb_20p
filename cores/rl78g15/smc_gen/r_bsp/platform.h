@@ -45,8 +45,8 @@ DEFINE YOUR SYSTEM - UNCOMMENT THE INCLUDE PATH FOR THE PLATFORM YOU ARE USING.
 //#include "./board/generic_rl78_f24/r_bsp.h"
 
 // GENERIC_RL78_G15
-// #include "./board/generic_rl78_g15/r_bsp.h"
-#include "r_bsp.h"
+#include "./board/generic_rl78_g15/r_bsp.h"
+
 
 /***********************************************************************************************************************
 MAKE SURE AT LEAST ONE PLATFORM WAS DEFINED - DO NOT EDIT BELOW THIS POINT

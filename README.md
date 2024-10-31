@@ -1,9 +1,9 @@
 # ArduinoCore-rl78g15_fpb_20p
-* ArduinoCore-rl78g15_fpb_20p for https://github.com/renesas/Arduino/tree/master/hardware
 
-# Notes
-* This repository contains the source code and configuration files of the Arduino RL78/G15-20p Fast Prototyping Board platform.
+This repository contains the source code and configuration files of the Arduino Core for Renesas RL78/G15 Fast Prototyping Board platform.
 
-# More information
-* The wiki below includes some information about how to use Arduino Library on Renesas Boards.
+# Quick Start Guide and more information
+
+The wiki below includes ‘Quick Start Guide’ about how to install and use Arduino Library on the Renesas Board and more information.  Please try to take a look at the site.
+
   * https://github.com/renesas/Arduino/wiki

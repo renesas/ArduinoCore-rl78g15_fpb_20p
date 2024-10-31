@@ -20,11 +20,6 @@
 #include <rl78g15/avr/avrlib.h>
 #include <stdio.h>
 
-char* itoa(int val, char* s, int radix)
-{
-	return ltoa(val, s, radix);
-}
-
 char* ltoa(long val, char* s, int radix)
 {
 	if (val >= 0) {
@@ -34,11 +29,6 @@ char* ltoa(long val, char* s, int radix)
 		ultoa(-val, s + 1, radix);
 	}
 	return s;
-}
-
-char* utoa(unsigned int val, char* s, int radix)
-{
-	return ultoa(val, s, radix);
 }
 
 char* ultoa(unsigned long val, char* s, int radix)

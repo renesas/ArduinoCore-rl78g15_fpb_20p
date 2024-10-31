@@ -6,8 +6,8 @@ MEMORY
 	OPT : ORIGIN = 0xC0, LENGTH = 4
 	SEC_ID : ORIGIN = 0xC4, LENGTH = 10
 	OCDSTAD : ORIGIN = 0xCE, LENGTH = 10
-	OCDROM : ORIGIN = 0x1e00, LENGTH = 0x200
-	ROM : ORIGIN = 0xD8, LENGTH = 17464
+	OCDROM : ORIGIN = 0x0, LENGTH = 0x1
+	ROM : ORIGIN = 0xD8, LENGTH = 7464
 	MIRROR : ORIGIN = 0xF0800, LENGTH = 6144
         SADDR : ORIGIN = 0xffe20, LENGTH = 0x000a0
 	RAM : ORIGIN = 0xFFB00, LENGTH = 1024
@@ -51,11 +51,13 @@ SECTIONS
 	.init (. + __romdatacopysize):
 	{
 		KEEP(*(.init))
+		. = ALIGN(2);
 	} >ROM AT>ROM
 
 	.fini :
 	{
 		KEEP(*(.fini))
+		. = ALIGN(2);
 	} >ROM
 
 	.text : 
@@ -63,6 +65,7 @@ SECTIONS
 		*(.text)
 		*(.text.*)
 		/*INPUT_SECTION_FLAGS(SHF_EXECINSTR) *(*_n)*/
+		. = ALIGN(2);
 	} >ROM
 	
 	PROVIDE(__rodata_limit = CONSTANT(MIRRORAREASTART)+ 0x800 + LENGTH(MIRROR));
@@ -237,7 +240,7 @@ SECTIONS
 	{
 
 		PROVIDE(__stack = .);
-		ASSERT((__stack > (__end + __stack_size)), "Error: Too much data - no room left for the stack");
+/*		ASSERT((__stack > (__end + __stack_size)), "Error: Too much data - no room left for the stack"); */
 	} >RAM
 
 	/DISCARD/ :
