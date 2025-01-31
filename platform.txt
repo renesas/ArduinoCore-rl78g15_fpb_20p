@@ -4,7 +4,7 @@
 # For more info:
 # LLVM Prototype Package for Tools Test
 name=Renesas RL78/G15
-version=1.2.1
+version=1.2.2
 
 # --------------------- 
 # Compile variables

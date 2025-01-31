@@ -180,13 +180,6 @@ long random(long howsmall, long howbig);
 
 #include "pins_variant.h"
 
-// undefine stdlib's abs if encountered
-#ifdef abs
-#undef abs
-#endif // abs
-
-#define abs(x) ((x)>0?(x):-(x))
-
 #ifndef configCPU_CLOCK_HZ
 #define configCPU_CLOCK_HZ 					(32000000)	//!< CPUの動作周波数（RTOS未使用時に定義）
 #endif
@@ -195,16 +188,9 @@ long random(long howsmall, long howbig);
 #define EXTERNAL		0x01
 #define INTERNAL		0x02
 
-// undefine stdlib's abs if encountered
-#ifdef abs
-#undef abs
-#endif
-
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
-#define abs(x) ((x)>0?(x):-(x))
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
 #define radians(deg) ((deg)*DEG_TO_RAD)
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x) ((x)*(x))
